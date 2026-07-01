@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS 5.5 → 7.0+ | Dr. Ellis Intensive Week</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d2e;
+    --surface2: #252840;
+    --accent: #6c63ff;
+    --accent2: #ff6584;
+    --accent3: #43e97b;
+    --text: #e8eaf6;
+    --muted: #8b8fa8;
+    --border: #2e3150;
+    --card: #1e2235;
+    --success: #43e97b;
+    --warn: #ffd166;
+    --danger: #ff6584;
+    --easy: #43e97b;
+    --good: #6c63ff;
+    --hard: #ffd166;
+    --again: #ff6584;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; }
+
+  /* SIDEBAR */
+  #sidebar {
+    width: 220px; min-height: 100vh; background: var(--surface);
+    border-right: 1px solid var(--border); position: fixed; top: 0; left: 0;
+    display: flex; flex-direction: column; z-index: 100;
+  }
+  #sidebar h1 { font-size: 0.85rem; font-weight: 700; padding: 20px 16px 8px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; }
+  #sidebar .subtitle { font-size: 0.7rem; color: var(--muted); padding: 0 16px 16px; border-bottom: 1px solid var(--border); }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; cursor: pointer; font-size: 0.82rem; color: var(--muted); transition: all 0.2s; border-left: 3px solid transparent; }
+  .nav-item:hover { background: var(--surface2); color: var(--text); }
+  .nav-item.active { background: var(--surface2); color: var(--accent); border-left-color: var(--accent); }
+  .nav-item .day-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+  .nav-item.active .day-dot, .nav-item.done .day-dot { background: var(--accent); }
+  .nav-sep { height: 1px; background: var(--border); margin: 8px 0; }
+  .nav-item.vocab-nav { color: var(--accent2); }
+  .nav-item.vocab-nav .day-dot { background: var(--accent2); }
+  #sidebar .sr-stats { margin-top: auto; padding: 16px; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); }
+  #sidebar .sr-stats strong { color: var(--accent3); }
+
+  /* MAIN */
+  #main { margin-left: 220px; flex: 1; padding: 32px 40px; max-width: 900px; }
+
+  /* SECTIONS */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* HEADER CARD */
+  .hero { background: linear-gradient(135deg, var(--surface2), var(--surface)); border: 1px solid var(--border); border-radius: 12px; padding: 28px 32px; margin-bottom: 28px; }
+  .hero .day-label { font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .hero h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; }
+  .hero p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+  .hero .tags { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .tag { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 3px 12px; font-size: 0.72rem; color: var(--muted); }
+  .tag.accent { background: rgba(108,99,255,0.15); border-color: var(--accent); color: var(--accent); }
+
+  /* CARDS */
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 22px 24px; margin-bottom: 20px; }
+  .card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .card h3 .icon { font-size: 1.1rem; }
+  .card p, .card li { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card li { margin-bottom: 6px; }
+  .card strong { color: var(--text); }
+
+  /* ERROR BOX */
+  .why-box { background: rgba(255,101,132,0.08); border: 1px solid rgba(255,101,132,0.25); border-radius: 8px; padding: 16px 18px; margin-bottom: 16px; }
+  .why-box .why-title { font-size: 0.75rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; font-weight: 700; }
+  .why-box li { color: var(--muted); font-size: 0.85rem; }
+
+  /* FORMULA BOX */
+  .formula { background: rgba(108,99,255,0.08); border: 1px solid rgba(108,99,255,0.3); border-radius: 8px; padding: 16px 18px; margin: 14px 0; font-family: monospace; font-size: 0.82rem; color: var(--text); line-height: 1.9; white-space: pre-wrap; }
+  .formula .comment { color: var(--accent); }
+
+  /* COMPARE TABLE */
+  .compare { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.85rem; }
+  .compare th { background: var(--surface2); color: var(--muted); font-weight: 600; padding: 8px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .compare td { padding: 8px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+  .compare tr:last-child td { border-bottom: none; }
+  .compare td:first-child { color: var(--muted); }
+  .compare td .good { color: var(--accent3); }
+  .compare td .bad { color: var(--accent2); text-decoration: line-through; }
+  .compare td .multi { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { background: rgba(108,99,255,0.15); border: 1px solid rgba(108,99,255,0.3); border-radius: 4px; padding: 2px 8px; font-size: 0.78rem; color: var(--accent); }
+
+  /* EXAMPLE BOX */
+  .example-box { border-left: 3px solid var(--accent); padding: 12px 16px; margin: 12px 0; background: rgba(108,99,255,0.05); border-radius: 0 6px 6px 0; }
+  .example-box .bad-example { color: var(--accent2); font-size: 0.85rem; margin-bottom: 6px; }
+  .example-box .good-example { color: var(--accent3); font-size: 0.85rem; }
+  .example-box .label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .example-box .bad-example .label { color: var(--accent2); }
+  .example-box .good-example .label { color: var(--accent3); }
+
+  /* PRACTICE TASK */
+  .task-card { background: rgba(67,233,123,0.06); border: 1px solid rgba(67,233,123,0.2); border-radius: 10px; padding: 20px 22px; margin-top: 20px; }
+  .task-card h3 { color: var(--accent3); font-size: 0.95rem; margin-bottom: 12px; }
+  .task-card .prompt-box { background: var(--surface2); border-radius: 6px; padding: 14px 16px; font-style: italic; color: var(--text); font-size: 0.88rem; line-height: 1.6; margin: 12px 0; border-left: 3px solid var(--accent3); }
+  .task-card ul li { color: var(--muted); font-size: 0.85rem; }
+
+  /* RETRIEVAL TASK */
+  .retrieval-card { background: rgba(255,209,102,0.06); border: 1px solid rgba(255,209,102,0.25); border-radius: 10px; padding: 20px 22px; margin-top: 20px; }
+  .retrieval-card h3 { color: var(--warn); font-size: 0.95rem; margin-bottom: 12px; }
+  .retrieval-q { background: var(--surface2); border-radius: 6px; padding: 10px 14px; margin: 8px 0; font-size: 0.85rem; color: var(--text); cursor: pointer; border: 1px solid var(--border); transition: border-color 0.2s; }
+  .retrieval-q:hover { border-color: var(--warn); }
+  .retrieval-q .q-text { margin-bottom: 6px; }
+  .retrieval-q .reveal { display: none; color: var(--accent3); font-size: 0.82rem; padding-top: 8px; border-top: 1px solid var(--border); margin-top: 8px; }
+  .retrieval-q.revealed .reveal { display: block; }
+  .retrieval-q .tap-hint { font-size: 0.72rem; color: var(--muted); margin-top: 4px; }
+
+  /* TOOLS */
+  .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  .tool-item { background: var(--surface2); border-radius: 6px; padding: 10px 14px; border: 1px solid var(--border); }
+  .tool-item .tool-name { font-size: 0.82rem; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .tool-item .tool-desc { font-size: 0.75rem; color: var(--muted); }
+
+  /* SCHEDULE TABLE */
+  .schedule-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+  .schedule-table th { background: var(--surface2); padding: 8px 12px; text-align: left; color: var(--muted); border-bottom: 1px solid var(--border); }
+  .schedule-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text); }
+  .schedule-table tr:last-child td { border-bottom: none; }
+  .schedule-table td:first-child { color: var(--accent); font-weight: 600; white-space: nowrap; }
+
+  /* ===== FLASHCARD / SR SECTION ===== */
+  #vocab-section { display: none; }
+  #vocab-section.active { display: block; }
+
+  .sr-hero { background: linear-gradient(135deg, rgba(255,101,132,0.15), rgba(108,99,255,0.15)); border: 1px solid var(--border); border-radius: 12px; padding: 28px 32px; margin-bottom: 28px; }
+  .sr-hero h2 { font-size: 1.5rem; margin-bottom: 8px; }
+  .sr-hero p { color: var(--muted); font-size: 0.88rem; }
+
+  .sr-controls { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; align-items: center; }
+  .sr-controls select { background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 8px 14px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; }
+  .btn { padding: 9px 20px; border-radius: 7px; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #5a52e0; }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-sm { padding: 6px 14px; font-size: 0.78rem; }
+
+  /* FLASHCARD */
+  .fc-outer { perspective: 1000px; width: 100%; max-width: 600px; margin: 0 auto 24px; }
+  .fc-inner { position: relative; width: 100%; height: 260px; transform-style: preserve-3d; transition: transform 0.5s; cursor: pointer; }
+  .fc-inner.flipped { transform: rotateY(180deg); }
+  .fc-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; text-align: center; border: 1px solid var(--border); }
+  .fc-front { background: linear-gradient(135deg, var(--surface2), var(--card)); }
+  .fc-back { background: linear-gradient(135deg, rgba(108,99,255,0.12), var(--card)); transform: rotateY(180deg); border-color: var(--accent); }
+  .fc-category { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
+  .fc-word { font-size: 1.6rem; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+  .fc-hint { font-size: 0.78rem; color: var(--muted); }
+  .fc-back .fc-definition { font-size: 1rem; color: var(--text); margin-bottom: 10px; line-height: 1.5; }
+  .fc-back .fc-collocation { font-size: 0.82rem; color: var(--accent); font-style: italic; margin-bottom: 6px; }
+  .fc-back .fc-example { font-size: 0.8rem; color: var(--muted); font-style: italic; }
+  .fc-flip-hint { text-align: center; color: var(--muted); font-size: 0.78rem; margin-bottom: 18px; }
+
+  /* RATING BUTTONS */
+  .fc-rating { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .fc-rating button { flex: 1; min-width: 80px; max-width: 120px; padding: 12px 8px; border-radius: 8px; border: none; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+  .btn-again { background: rgba(255,101,132,0.2); color: var(--again); border: 1px solid var(--again); }
+  .btn-again:hover { background: var(--again); color: #fff; }
+  .btn-hard { background: rgba(255,209,102,0.2); color: var(--hard); border: 1px solid var(--hard); }
+  .btn-hard:hover { background: var(--hard); color: #222; }
+  .btn-good { background: rgba(108,99,255,0.2); color: var(--good); border: 1px solid var(--good); }
+  .btn-good:hover { background: var(--good); color: #fff; }
+  .btn-easy { background: rgba(67,233,123,0.2); color: var(--easy); border: 1px solid var(--easy); }
+  .btn-easy:hover { background: var(--easy); color: #111; }
+
+  .fc-progress { text-align: center; color: var(--muted); font-size: 0.8rem; margin-bottom: 12px; }
+  .fc-progress span { color: var(--text); font-weight: 600; }
+
+  /* SR STATS PANEL */
+  .sr-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; text-align: center; }
+  .stat-card .stat-num { font-size: 1.6rem; font-weight: 700; }
+  .stat-card .stat-label { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+  .stat-new .stat-num { color: var(--accent); }
+  .stat-review .stat-num { color: var(--warn); }
+  .stat-done .stat-num { color: var(--accent3); }
+  .stat-total .stat-num { color: var(--text); }
+
+  /* VOCAB BANK BROWSER */
+  .vocab-bank { margin-top: 24px; }
+  .vocab-bank h3 { font-size: 0.9rem; color: var(--muted); margin-bottom: 14px; font-weight: 600; }
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .vocab-card-mini { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+  .vocab-card-mini .word { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+  .vocab-card-mini .def { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+  .vocab-card-mini .level { font-size: 0.68rem; color: var(--accent); margin-top: 6px; }
+  .vocab-card-mini.sr-new { border-left: 3px solid var(--accent); }
+  .vocab-card-mini.sr-learning { border-left: 3px solid var(--warn); }
+  .vocab-card-mini.sr-mastered { border-left: 3px solid var(--accent3); }
+
+  /* DONE SCREEN */
+  .done-screen { text-align: center; padding: 60px 20px; }
+  .done-screen .done-icon { font-size: 3rem; margin-bottom: 16px; }
+  .done-screen h2 { font-size: 1.4rem; margin-bottom: 8px; }
+  .done-screen p { color: var(--muted); font-size: 0.88rem; }
+
+  /* PROGRESS BAR */
+  .progress-wrap { background: var(--border); border-radius: 4px; height: 4px; margin-bottom: 20px; overflow: hidden; }
+  .progress-fill { background: linear-gradient(90deg, var(--accent), var(--accent3)); height: 100%; transition: width 0.4s; }
+
+  /* DAY SCHEDULE OVERVIEW */
+  .daily-schedule { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; }
+  .ds-block { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; text-align: center; }
+  .ds-block .ds-time { font-size: 0.68rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+  .ds-block .ds-name { font-size: 0.82rem; font-weight: 600; margin-top: 4px; }
+  .ds-block .ds-dur { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+
+  /* RULE BOX */
+  .rule-box { background: rgba(255,209,102,0.07); border: 1px solid rgba(255,209,102,0.3); border-radius: 8px; padding: 14px 16px; margin: 14px 0; }
+  .rule-box .rule-label { font-size: 0.7rem; color: var(--warn); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 6px; }
+  .rule-box p { font-size: 0.85rem; color: var(--text); line-height: 1.6; }
+
+  /* ACCENT LABELS */
+  .section-label { font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 8px; }
+
+  @media (max-width: 768px) {
+    #sidebar { display: none; }
+    #main { margin-left: 0; padding: 20px 16px; }
+    .daily-schedule { grid-template-columns: 1fr 1fr; }
+    .sr-stats-grid { grid-template-columns: 1fr 1fr; }
+    .tools-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <h1>Dr. Ellis</h1>
+  <div class="subtitle">IELTS 5.5 → 7.0+ | Intensive Week</div>
+  <div class="nav-item active" onclick="showSection('day1')"><span class="day-dot"></span>Mon — Writing Task 2</div>
+  <div class="nav-item" onclick="showSection('day2')"><span class="day-dot"></span>Tue — Listening</div>
+  <div class="nav-item" onclick="showSection('day3')"><span class="day-dot"></span>Wed — Reading</div>
+  <div class="nav-item" onclick="showSection('day4')"><span class="day-dot"></span>Thu — Speaking</div>
+  <div class="nav-item" onclick="showSection('day5')"><span class="day-dot"></span>Fri — Writing Task 1</div>
+  <div class="nav-item" onclick="showSection('day6')"><span class="day-dot"></span>Sat — Integration</div>
+  <div class="nav-item" onclick="showSection('day7')"><span class="day-dot"></span>Sun — Immersion</div>
+  <div class="nav-sep"></div>
+  <div class="nav-item vocab-nav" onclick="showSection('vocab')"><span class="day-dot"></span>Vocabulary SR Deck</div>
+  <div class="sr-stats" id="sidebar-stats">SR Cards: <strong id="sb-due">0</strong> due today</div>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+
+<!-- ===================== DAY 1 ===================== -->
+<div id="day1" class="section active">
+  <div class="hero">
+    <div class="day-label">Day 1 · Monday</div>
+    <h2>Writing Task 2 — Opinion Essay</h2>
+    <p>The single highest-value skill to fix first. Task 2 is worth twice as many marks as Task 1. At Band 5.5 the core problem is not grammar — it is argument structure and vocabulary range.</p>
+    <div class="tags">
+      <span class="tag accent">Writing</span>
+      <span class="tag">90 min study</span>
+      <span class="tag">40 min timed task</span>
+      <span class="tag">10 min retrieval</span>
+    </div>
+  </div>
+
+  <div class="daily-schedule">
+    <div class="ds-block"><div class="ds-time">Morning</div><div class="ds-name">Study Notes</div><div class="ds-dur">90 min</div></div>
+    <div class="ds-block"><div class="ds-time">Midday</div><div class="ds-name">Vocab Drills</div><div class="ds-dur">30 min</div></div>
+    <div class="ds-block"><div class="ds-time">Afternoon</div><div class="ds-name">Timed Essay</div><div class="ds-dur">40 min</div></div>
+    <div class="ds-block"><div class="ds-time">Evening</div><div class="ds-name">Retrieval + SR</div><div class="ds-dur">30 min</div></div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🔍</span> Why Students Score Below Band 6 on Task 2</h3>
+    <div class="why-box">
+      <div class="why-title">The Four Band 5.5 Errors</div>
+      <ol>
+        <li>Writing a <strong>list of ideas</strong> instead of a developed argument</li>
+        <li>Using general vocabulary: <em>good, bad, important, many people</em></li>
+        <li>Never fully developing one point — always moving on too quickly</li>
+        <li>Confusing "discuss both views" with "give your opinion"</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📐</span> The Band 7 Essay Structure</h3>
+    <div class="formula"><span class="comment">¶ 1 — Introduction (3–4 sentences)</span>
+  → Paraphrase the question (do NOT copy it)
+  → State your position clearly
+  → Preview your two main arguments
+
+<span class="comment">¶ 2 — Body 1 (5–6 sentences)</span>
+  → Topic sentence: one clear, specific claim
+  → Explain WHY this is true (mechanism / reason)
+  → Give a specific example (real or plausible)
+  → Link back to the question
+
+<span class="comment">¶ 3 — Body 2 (5–6 sentences)</span>
+  → Same structure as Body 1
+
+<span class="comment">¶ 4 — Conclusion (2–3 sentences)</span>
+  → Restate your position in new words
+  → Summarise the two main reasons
+  → Optional: wider implication</div>
+    <div class="rule-box">
+      <div class="rule-label">Processing Instruction Task — Do this BEFORE writing</div>
+      <p>Read these two sentences. Which sounds more academic? Why?<br>
+      <br>(A) <em>I think governments should spend money on public transport.</em>
+      <br>(B) <em>It is my contention that governments have a responsibility to prioritise public transport investment.</em>
+      <br><br>Notice: passive construction "it is my contention that" · nominalisation "investment" · modal of obligation "have a responsibility"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">💬</span> Band 7 Vocabulary Swaps</h3>
+    <p style="margin-bottom:12px; font-size:0.82rem; color:var(--muted)">Click the Vocabulary SR Deck to drill these with spaced repetition. Study them here first.</p>
+    <table class="compare">
+      <tr><th>Band 5 Word</th><th>Band 7 Alternatives</th></tr>
+      <tr><td><span class="bad">good</span></td><td><div class="multi"><span class="chip">beneficial</span><span class="chip">advantageous</span><span class="chip">constructive</span></div></td></tr>
+      <tr><td><span class="bad">bad</span></td><td><div class="multi"><span class="chip">detrimental</span><span class="chip">counterproductive</span><span class="chip">harmful</span></div></td></tr>
+      <tr><td><span class="bad">important</span></td><td><div class="multi"><span class="chip">crucial</span><span class="chip">pivotal</span><span class="chip">indispensable</span></div></td></tr>
+      <tr><td><span class="bad">many people</span></td><td><div class="multi"><span class="chip">a significant proportion of the population</span></div></td></tr>
+      <tr><td><span class="bad">nowadays</span></td><td><div class="multi"><span class="chip">in contemporary society</span><span class="chip">in the modern era</span></div></td></tr>
+      <tr><td><span class="bad">I think</span></td><td><div class="multi"><span class="chip">I would argue that</span><span class="chip">It is my contention that</span></div></td></tr>
+      <tr><td><span class="bad">because</span></td><td><div class="multi"><span class="chip">owing to the fact that</span><span class="chip">on the grounds that</span></div></td></tr>
+      <tr><td><span class="bad">big problem</span></td><td><div class="multi"><span class="chip">a pressing issue</span><span class="chip">a major concern</span></div></td></tr>
+      <tr><td><span class="bad">shows</span></td><td><div class="multi"><span class="chip">demonstrates</span><span class="chip">illustrates</span><span class="chip">underscores</span></div></td></tr>
+      <tr><td><span class="bad">use</span></td><td><div class="multi"><span class="chip">utilise</span><span class="chip">implement</span><span class="chip">deploy</span></div></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🔗</span> Band 7 Linking Phrases</h3>
+    <table class="compare">
+      <tr><th>Function</th><th>Band 7 Phrase</th></tr>
+      <tr><td>Add</td><td><em>Furthermore, this argument is reinforced by the fact that…</em></td></tr>
+      <tr><td>Contrast</td><td><em>Nevertheless, it is important to acknowledge that…</em></td></tr>
+      <tr><td>Result</td><td><em>As a consequence of this, many individuals…</em></td></tr>
+      <tr><td>Example</td><td><em>This is particularly evident in contexts where…</em></td></tr>
+      <tr><td>Concede</td><td><em>While it is true that… it does not necessarily follow that…</em></td></tr>
+      <tr><td>Conclude</td><td><em>In light of the arguments presented above, it is clear that…</em></td></tr>
+    </table>
+  </div>
+
+  <div class="task-card">
+    <h3>✏️ Practice Task — 40 minutes</h3>
+    <div class="prompt-box">Some people believe that governments should invest more in public transport rather than roads. To what extent do you agree or disagree?</div>
+    <ul>
+      <li>Time: <strong>40 minutes</strong> strictly</li>
+      <li>Word count: <strong>270–290 words</strong></li>
+      <li>After writing: underline every adjective/adverb. Replace at least 3 with higher-level alternatives.</li>
+      <li>Check: Do you have a clear topic sentence in each body paragraph?</li>
+    </ul>
+    <div class="tools-grid" style="margin-top:14px">
+      <div class="tool-item"><div class="tool-name">IELTS Simon</div><div class="tool-desc">ielts-simon.com — model essays with band score commentary</div></div>
+      <div class="tool-item"><div class="tool-name">Ludwig.guru</div><div class="tool-desc">Check if your phrase is used in real academic writing</div></div>
+      <div class="tool-item"><div class="tool-name">Grammarly</div><div class="tool-desc">Paste essay; fix errors; ask WHY each correction was made</div></div>
+      <div class="tool-item"><div class="tool-name">Deepl Write</div><div class="tool-desc">write.deepl.com — paraphrase your introduction</div></div>
+    </div>
+  </div>
+
+  <div class="retrieval-card">
+    <h3>⚡ Retrieval Task — Close your notes. No peeking.</h3>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q1.</strong> Name the four paragraphs of a Band 7 Task 2 essay and one key element of each.</div>
+      <div class="tap-hint">Tap to reveal answer</div>
+      <div class="reveal">Introduction (paraphrase + position + preview) → Body 1 (topic sentence + reason + example) → Body 2 (same structure) → Conclusion (restate + summarise)</div>
+    </div>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q2.</strong> Give five Band 7 replacements for the word "important."</div>
+      <div class="tap-hint">Tap to reveal answer</div>
+      <div class="reveal">crucial · pivotal · indispensable · significant · paramount</div>
+    </div>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q3.</strong> Write a linking phrase that shows contrast and one that shows result.</div>
+      <div class="tap-hint">Tap to reveal answer</div>
+      <div class="reveal">Contrast: "Nevertheless, it is important to acknowledge that…" · Result: "As a consequence of this, many individuals…"</div>
+    </div>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q4.</strong> What is wrong with this sentence? "I think the government must to invest in transport because it is good."</div>
+      <div class="tap-hint">Tap to reveal answer</div>
+      <div class="reveal">Three problems: "I think" (too informal) → "I would argue that"; "must to" (grammar: must + bare infinitive); "good" (too vague) → "beneficial" / "advantageous"</div>
+    </div>
+    <p style="font-size:0.78rem; color:var(--muted); margin-top:14px">Add any words you couldn't recall to your <strong>SR Deck</strong> tonight.</p>
+  </div>
+</div>
+
+<!-- ===================== DAY 2 ===================== -->
+<div id="day2" class="section">
+  <div class="hero">
+    <div class="day-label">Day 2 · Tuesday</div>
+    <h2>Listening — Sections 3 & 4</h2>
+    <p>Section 4 is an academic monologue — the hardest listening section. Most Band 5.5 errors here come from poor prediction and spelling, not from inability to understand English.</p>
+    <div class="tags"><span class="tag accent">Listening</span><span class="tag">Sections 3 & 4</span><span class="tag">Prediction technique</span><span class="tag">Spelling traps</span></div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">❌</span> Why Band 5.5 Students Miss Answers</h3>
+    <div class="why-box">
+      <div class="why-title">Four Core Errors</div>
+      <ul>
+        <li>They <strong>panic</strong> when they miss one answer and lose the next two</li>
+        <li>They do not <strong>predict</strong> what type of answer to listen for</li>
+        <li>They mishear homophones: <em>their/there, two/too/to, write/right</em></li>
+        <li>They do not use the <strong>30-second preparation time</strong> effectively</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🔮</span> The Prediction Technique — Band 7 Habit</h3>
+    <p>Before the audio plays, read each question and ask three questions:</p>
+    <ul style="margin:12px 0 12px 20px">
+      <li style="margin-bottom:8px">What <strong>grammatical form</strong> is needed? (noun? number? name? verb?)</li>
+      <li style="margin-bottom:8px">What <strong>category</strong> of word? (place? time? percentage? adjective?)</li>
+      <li style="margin-bottom:8px">What <strong>synonyms</strong> might the speaker use for the keywords in the question?</li>
+    </ul>
+    <div class="example-box">
+      <div class="q-text" style="font-size:0.85rem; color:var(--text); margin-bottom:8px">Question: <em>"The library closes at _____ on Fridays."</em></div>
+      <div class="good-example"><div class="label">✓ PREDICTION</div>A time (e.g., 6 pm / half past five). Listen for time phrases. The speaker may say "shuts" instead of "closes."</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📝</span> Section 4 Note-Taking Method</h3>
+    <p style="margin-bottom:12px">Section 4 is an academic monologue. Use this structure while listening:</p>
+    <div class="formula"><span class="comment">Main topic:</span>  _________________________________
+<span class="comment">Sub-topic 1:</span> _________________________________
+  → Key detail:  _____________________________
+  → Example:     _____________________________
+<span class="comment">Sub-topic 2:</span> _________________________________
+  → Key detail:  _____________________________
+  → Key detail:  _____________________________</div>
+    <p style="font-size:0.82rem; color:var(--muted); margin-top:8px">Your answers live in the <strong>detail lines</strong>. The sub-topic lines give you context.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🔤</span> Spelling Traps — One Misspelling = One Mark Lost</h3>
+    <table class="compare">
+      <tr><th>Correct spelling</th><th>Common error</th><th>Memory trick</th></tr>
+      <tr><td><strong>accommodation</strong></td><td><span style="color:var(--accent2)">accomodation</span></td><td>Double c, double m</td></tr>
+      <tr><td><strong>necessary</strong></td><td><span style="color:var(--accent2)">neccessary</span></td><td>One collar (c), two socks (ss)</td></tr>
+      <tr><td><strong>environment</strong></td><td><span style="color:var(--accent2)">enviroment</span></td><td>environ + ment</td></tr>
+      <tr><td><strong>government</strong></td><td><span style="color:var(--accent2)">goverment</span></td><td>govern + ment (silent n in speech!)</td></tr>
+      <tr><td><strong>immediately</strong></td><td><span style="color:var(--accent2)">immediatly</span></td><td>immediate + ly</td></tr>
+      <tr><td><strong>colleague</strong></td><td><span style="color:var(--accent2)">collegue</span></td><td>col + league (like a sports league)</td></tr>
+      <tr><td><strong>approximately</strong></td><td><span style="color:var(--accent2)">aproximately</span></td><td>ap + proximate + ly</td></tr>
+      <tr><td><strong>temperature</strong></td><td><span style="color:var(--accent2)">temprature</span></td><td>temper + ature</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🌍</span> Accent Guide</h3>
+    <table class="compare">
+      <tr><th>Accent</th><th>Key patterns</th></tr>
+      <tr><td>British</td><td><em>can't</em> sounds like <em>cahnt</em> · <em>schedule</em> = shed-yool · <em>either</em> = eye-ther</td></tr>
+      <tr><td>Australian</td><td>Rising intonation at end of statements · <em>today</em> = to-dye · long /a/ sounds</td></tr>
+      <tr><td>North American</td><td>Rhotic r · <em>water</em> = wadder · flap t between vowels</td></tr>
+    </table>
+    <p style="margin-top:10px; font-size:0.82rem; color:var(--muted)"><strong>Daily habit:</strong> 15 min BBC Learning English + 15 min NPR/ABC podcast. Exposure beats analysis.</p>
+  </div>
+
+  <div class="task-card">
+    <h3>🎧 Practice Task</h3>
+    <ul>
+      <li>Cambridge IELTS 18, Test 2, <strong>Section 4</strong></li>
+      <li>Before listening: spend <strong>2 minutes</strong> writing predictions for each gap</li>
+      <li>After: check answers, then listen again to every gap you missed</li>
+      <li>Write down the <strong>exact sentence</strong> where each answer appeared</li>
+      <li><strong>Dictogloss bonus:</strong> Pick 60 seconds of the audio. Listen once. Reconstruct in writing from notes. Compare to transcript.</li>
+    </ul>
+  </div>
+
+  <div class="retrieval-card">
+    <h3>⚡ Retrieval Task</h3>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q1.</strong> Spell these from memory: accommodation · necessary · colleague · immediately</div>
+      <div class="tap-hint">Tap to reveal</div>
+      <div class="reveal">a-c-c-o-m-m-o-d-a-t-i-o-n · n-e-c-e-s-s-a-r-y · c-o-l-l-e-a-g-u-e · i-m-m-e-d-i-a-t-e-l-y</div>
+    </div>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q2.</strong> What three things should you predict before the audio plays?</div>
+      <div class="tap-hint">Tap to reveal</div>
+      <div class="reveal">1. Grammatical form needed (noun? number?) · 2. Category of word (time? place?) · 3. Synonyms the speaker might use for question keywords</div>
+    </div>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q3.</strong> What is a Dictogloss and why does it work?</div>
+      <div class="tap-hint">Tap to reveal</div>
+      <div class="reveal">Listen to a short text, take notes, reconstruct in writing, compare to original. Works because it integrates listening + grammar noticing + output production simultaneously (Wajnryb, 1990).</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== DAY 3 ===================== -->
+<div id="day3" class="section">
+  <div class="hero">
+    <div class="day-label">Day 3 · Wednesday</div>
+    <h2>Reading — TFNG & Matching Headings</h2>
+    <p>The two question types most responsible for keeping students at Band 5.5. The TFNG distinction and the Matching Headings strategy are learnable in a single focused session.</p>
+    <div class="tags"><span class="tag accent">Reading</span><span class="tag">True/False/Not Given</span><span class="tag">Matching Headings</span><span class="tag">Time management</span></div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">⚠️</span> True / False / Not Given — The Most Misunderstood Question Type</h3>
+    <div class="formula"><span class="comment">TRUE</span>      = The text clearly says THE SAME THING as the statement
+<span class="comment">FALSE</span>     = The text clearly CONTRADICTS the statement
+<span class="comment">NOT GIVEN</span> = The statement is NOT MENTIONED AT ALL
+           There is no evidence either way</div>
+    <div class="rule-box">
+      <div class="rule-label">Critical Rule</div>
+      <p>NOT GIVEN does not mean "I couldn't find it." It means the text provides <em>no information</em> to confirm OR deny the statement. If you searched the text and found nothing related to the <em>topic</em> of the statement — that is NOT GIVEN.</p>
+    </div>
+    <div class="rule-box">
+      <div class="rule-label">The FALSE Trap</div>
+      <p>Students mark things FALSE when the text just doesn't discuss it. If the statement is about "the cost of the project" and the text says nothing about cost — that is <strong>NOT GIVEN</strong>, not FALSE. FALSE requires a direct contradiction.</p>
+    </div>
+    <div class="example-box">
+      <div class="bad-example"><div class="label">✗ WRONG APPROACH</div>Student reads: "The text doesn't say this so it must be false." → Marks FALSE</div>
+      <div class="good-example"><div class="label">✓ CORRECT APPROACH</div>"The text doesn't discuss this topic at all. There is no information to confirm or deny it." → Marks NOT GIVEN</div>
+    </div>
+    <h4 style="font-size:0.88rem; margin:16px 0 10px; color:var(--text)">4-Step TFNG Method:</h4>
+    <ol style="font-size:0.85rem; color:var(--muted); padding-left:20px">
+      <li style="margin-bottom:6px">Read the statement carefully</li>
+      <li style="margin-bottom:6px">Find the relevant section (use keywords to locate it)</li>
+      <li style="margin-bottom:6px">Compare the statement to the text <strong>word by word</strong></li>
+      <li style="margin-bottom:6px">Ask: does the text CONFIRM, CONTRADICT, or IGNORE this statement?</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📑</span> Matching Headings — Band 7 Strategy</h3>
+    <div class="why-box">
+      <div class="why-title">Why students get this wrong</div>
+      <ul>
+        <li>They read the <strong>whole paragraph</strong> looking for matching words — this is slow and misleading</li>
+        <li>They match words rather than matching <strong>function / main idea</strong></li>
+      </ul>
+    </div>
+    <h4 style="font-size:0.88rem; margin:14px 0 10px; color:var(--text)">The 3-Step Method:</h4>
+    <ol style="font-size:0.85rem; color:var(--muted); padding-left:20px">
+      <li style="margin-bottom:8px">Read the <strong>first sentence</strong> — usually contains the main idea</li>
+      <li style="margin-bottom:8px">Read the <strong>last sentence</strong> — often signals what the paragraph is about</li>
+      <li style="margin-bottom:8px">Ignore details in the middle — they support the heading, they do not define it</li>
+    </ol>
+    <div class="example-box" style="margin-top:14px">
+      <div class="bad-example"><div class="label">✗ WRONG MATCH</div>Paragraph begins: "Despite initial scepticism, several governments adopted the policy." → Student picks "Government policy"</div>
+      <div class="good-example"><div class="label">✓ CORRECT MATCH</div>The function is about acceptance of something controversial → "Growing acceptance of a controversial approach"</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">⏱️</span> Time Management — Band 7 Allocation</h3>
+    <table class="compare">
+      <tr><th>Passage</th><th>Target Time</th><th>Why</th></tr>
+      <tr><td>Passage 1 (easiest)</td><td><strong style="color:var(--accent3)">15 minutes</strong></td><td>Build confidence; bank time</td></tr>
+      <tr><td>Passage 2 (medium)</td><td><strong style="color:var(--warn)">20 minutes</strong></td><td>Steady pace</td></tr>
+      <tr><td>Passage 3 (hardest)</td><td><strong style="color:var(--accent2)">25 minutes</strong></td><td>Use banked time here</td></tr>
+    </table>
+    <div class="rule-box" style="margin-top:14px">
+      <div class="rule-label">The 90-Second Rule</div>
+      <p>If a question takes more than 90 seconds, mark it and move on. Return at the end. A question you cannot answer in 90 seconds is unlikely to be answered in 3 minutes either.</p>
+    </div>
+  </div>
+
+  <div class="task-card">
+    <h3>📖 Practice Task</h3>
+    <ul>
+      <li>Cambridge IELTS 18, Test 1, <strong>Reading Passage 2</strong></li>
+      <li>After completing: go back to every wrong answer and write <strong>one sentence</strong> explaining WHY your answer was wrong</li>
+      <li>Specifically identify: did you confuse FALSE and NOT GIVEN?</li>
+      <li>Time yourself strictly — did you finish each passage in the target window?</li>
+    </ul>
+    <div class="tools-grid" style="margin-top:14px">
+      <div class="tool-item"><div class="tool-name">IELTS Liz</div><div class="tool-desc">ieltsliz.com — free lessons on every question type with worked examples</div></div>
+      <div class="tool-item"><div class="tool-name">ReadTheory.org</div><div class="tool-desc">Comprehension drills that train close reading and inference</div></div>
+      <div class="tool-item"><div class="tool-name">Spreeder.com</div><div class="tool-desc">Speed reading trainer to increase words per minute</div></div>
+      <div class="tool-item"><div class="tool-name">British Council</div><div class="tool-desc">britishcouncil.org/exam/ielts — free reading exercises</div></div>
+    </div>
+  </div>
+
+  <div class="retrieval-card">
+    <h3>⚡ Retrieval Task</h3>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q1.</strong> Define TRUE, FALSE, and NOT GIVEN in your own words.</div>
+      <div class="tap-hint">Tap to reveal</div>
+      <div class="reveal">TRUE = text confirms the statement · FALSE = text directly contradicts the statement · NOT GIVEN = text provides no information either way on the topic</div>
+    </div>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q2.</strong> A statement says "The project cost £2 million." The text discusses the project in detail but never mentions cost. What is the answer?</div>
+      <div class="tap-hint">Tap to reveal</div>
+      <div class="reveal">NOT GIVEN. The text does not mention cost at all. Absence of information = NOT GIVEN, not FALSE.</div>
+    </div>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q3.</strong> What two sentences in a paragraph should you focus on for Matching Headings?</div>
+      <div class="tap-hint">Tap to reveal</div>
+      <div class="reveal">First sentence (contains main idea) and last sentence (signals what the paragraph is about). Ignore details in the middle.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== DAY 4 ===================== -->
+<div id="day4" class="section">
+  <div class="hero">
+    <div class="day-label">Day 4 · Thursday</div>
+    <h2>Speaking — Parts 1, 2 & 3</h2>
+    <p>The speaking exam rewards extended, structured answers with grammatical range. At Band 5.5 the problem is usually answer length and grammar variety, not pronunciation.</p>
+    <div class="tags"><span class="tag accent">Speaking</span><span class="tag">ADD Formula</span><span class="tag">IDEA Structure</span><span class="tag">Grammar Range</span></div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🎯</span> Part 1 — The ADD Formula</h3>
+    <p style="margin-bottom:12px">Never give a one-sentence answer. Every Part 1 response should have three components:</p>
+    <div class="formula"><span class="comment">A</span> — Answer the question directly (1 sentence)
+<span class="comment">D</span> — Develop it: explain or describe (1–2 sentences)
+<span class="comment">D</span> — Detail: give a specific example, time, or reason</div>
+    <div class="example-box" style="margin-top:14px">
+      <div class="bad-example"><div class="label">✗ Band 5 — Too short</div>"Yes, I like cooking."</div>
+      <div class="good-example"><div class="label">✓ Band 7 — ADD formula applied</div>"I genuinely enjoy cooking, especially at weekends when I have more time. I find it quite therapeutic — there's something satisfying about preparing a meal from scratch. Last Sunday I tried making a Thai green curry for the first time, and it actually turned out really well."</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🎤</span> Part 2 — The IDEA Structure (2 minutes)</h3>
+    <div class="formula"><span class="comment">I</span> — Introduce the topic (1–2 sentences)
+<span class="comment">D</span> — Describe the main details (who, what, where, when)
+<span class="comment">E</span> — Explain why it is significant / how it made you feel
+<span class="comment">A</span> — Attitude: your personal reflection or opinion about it</div>
+    <h4 style="font-size:0.85rem; margin:16px 0 8px; color:var(--text)">Time-buying phrases (not fillers):</h4>
+    <ul style="font-size:0.85rem; color:var(--muted); padding-left:20px">
+      <li style="margin-bottom:6px"><em>That's an interesting question to consider…</em></li>
+      <li style="margin-bottom:6px"><em>Let me think about that for a moment…</em></li>
+      <li style="margin-bottom:6px"><em>There are several things I could mention here…</em></li>
+      <li style="margin-bottom:6px"><em>What comes to mind first is…</em></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🧠</span> Grammar Range — What Band 7 Looks Like</h3>
+    <table class="compare">
+      <tr><th>Structure</th><th>Band 7 Example</th></tr>
+      <tr><td>Past perfect</td><td><em>By the time I arrived, they had already started.</em></td></tr>
+      <tr><td>Conditionals</td><td><em>If I had more time, I would travel more often.</em></td></tr>
+      <tr><td>Passive voice</td><td><em>The building was constructed in the 1980s.</em></td></tr>
+      <tr><td>Relative clauses</td><td><em>It's something that I've always been passionate about.</em></td></tr>
+      <tr><td>Wish / regret</td><td><em>I wish I had studied harder when I was younger.</em></td></tr>
+      <tr><td>Gerund subject</td><td><em>Learning a new language requires enormous dedication.</em></td></tr>
+    </table>
+    <div class="rule-box" style="margin-top:14px">
+      <div class="rule-label">Processing Instruction — Before recording</div>
+      <p>Write one sentence using EACH grammar structure above about your Part 2 topic. Then use at least two of them in your spoken answer. This is <strong>pushed output</strong> (Swain, 1985) — it forces you to use structures you would normally avoid.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">💬</span> Part 3 — Discussion Answer Structure</h3>
+    <div class="formula"><span class="comment">Position</span>   → State your view directly
+<span class="comment">Reason</span>     → Explain why (one developed reason)
+<span class="comment">Example</span>    → Give a real or plausible example
+<span class="comment">Counter</span>    → Acknowledge the other side briefly
+<span class="comment">Return</span>     → Come back to your original position</div>
+    <div class="example-box" style="margin-top:14px">
+      <div class="good-example"><div class="label">✓ Band 7 Part 3 Answer</div><em>"On balance, I'd say the effects of social media are largely negative, particularly for younger generations. The constant exposure to curated images of other people's lives tends to fuel anxiety and lower self-esteem. In countries like South Korea, for instance, there has been a notable rise in depression rates that researchers have linked to social media use. That said, it would be unfair to ignore the genuine benefits — platforms like Twitter have given marginalised communities a voice they previously lacked. Nevertheless, the harms seem to outweigh the advantages for most users."</em></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🔊</span> Pronunciation — Suprasegmentals First</h3>
+    <p style="margin-bottom:12px; font-size:0.85rem; color:var(--muted)">Individual phoneme errors matter less than these features. Fix suprasegmentals first.</p>
+    <table class="compare">
+      <tr><th>Feature</th><th>Band 5.5 Error</th><th>Band 7 Target</th></tr>
+      <tr><td>Word stress</td><td><em>dePARTment</em></td><td><em>DEpartment</em></td></tr>
+      <tr><td>Sentence stress</td><td>Stresses every word equally</td><td>Stresses content words; reduces function words</td></tr>
+      <tr><td>Intonation in lists</td><td>Flat throughout</td><td>Rises on each item; falls on the last</td></tr>
+      <tr><td>Thought groups</td><td>Speaks word by word</td><td>Groups words in meaningful chunks</td></tr>
+    </table>
+    <p style="margin-top:12px; font-size:0.82rem; color:var(--muted)"><strong>Shadowing technique:</strong> Find a 30-sec Band 8 Speaking sample on YouTube. Listen once. Play again and speak simultaneously, matching stress and rhythm exactly.</p>
+  </div>
+
+  <div class="task-card">
+    <h3>🎙️ Practice Task — Record yourself</h3>
+    <ul>
+      <li>Part 1: <em>"What kind of music do you enjoy?"</em> / <em>"Do you prefer spending time indoors or outdoors?"</em></li>
+      <li>Part 2: <em>"Describe a skill you would like to learn. Say what it is, why you want to learn it, and how you would go about it."</em></li>
+      <li>Part 3: <em>"Do you think schools should teach more practical life skills?"</em></li>
+      <li>Listen back: Did you speak for 90+ seconds on Part 2? Did each Part 3 answer have 4+ sentences?</li>
+    </ul>
+    <div class="tools-grid" style="margin-top:14px">
+      <div class="tool-item"><div class="tool-name">IELTS Speaking Pro</div><div class="tool-desc">App — AI mock tests with instant band score feedback</div></div>
+      <div class="tool-item"><div class="tool-name">Elsa Speak</div><div class="tool-desc">App — pronunciation scoring vs. native speaker benchmarks</div></div>
+      <div class="tool-item"><div class="tool-name">E2 Language YouTube</div><div class="tool-desc">Free Part 2 model answers with band score annotation</div></div>
+      <div class="tool-item"><div class="tool-name">Otter.ai</div><div class="tool-desc">Record and transcribe yourself — count filler words</div></div>
+    </div>
+  </div>
+
+  <div class="retrieval-card">
+    <h3>⚡ Retrieval Task</h3>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q1.</strong> What does ADD stand for and how long should a Part 1 answer be?</div>
+      <div class="tap-hint">Tap to reveal</div>
+      <div class="reveal">Answer · Develop · Detail. Aim for 3–5 sentences, approximately 30–40 seconds.</div>
+    </div>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q2.</strong> What does IDEA stand for?</div>
+      <div class="tap-hint">Tap to reveal</div>
+      <div class="reveal">Introduce · Describe · Explain · Attitude</div>
+    </div>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q3.</strong> Name the five parts of a Band 7 Part 3 answer structure.</div>
+      <div class="tap-hint">Tap to reveal</div>
+      <div class="reveal">Position → Reason → Example → Counter-acknowledgement → Return to position</div>
+    </div>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q4.</strong> Give one example of a past perfect sentence and one conditional sentence.</div>
+      <div class="tap-hint">Tap to reveal</div>
+      <div class="reveal">Past perfect: "By the time I arrived, they had already started." · Conditional: "If I had more time, I would travel more often."</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== DAY 5 ===================== -->
+<div id="day5" class="section">
+  <div class="hero">
+    <div class="day-label">Day 5 · Friday</div>
+    <h2>Writing Task 1 — Academic Data Essay</h2>
+    <p>The Overview paragraph is the single feature that most clearly separates Band 6 from Band 7. Most 5.5 students do not write one at all.</p>
+    <div class="tags"><span class="tag accent">Writing Task 1</span><span class="tag">Overview paragraph</span><span class="tag">Data language</span><span class="tag">20 min task</span></div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">❌</span> Why Band 5.5 Students Struggle with Task 1</h3>
+    <div class="why-box">
+      <div class="why-title">Four Core Errors</div>
+      <ul>
+        <li>They describe <strong>every single data point</strong> instead of selecting and grouping</li>
+        <li>They do not write a clear <strong>Overview paragraph</strong> (biggest Band 7 requirement)</li>
+        <li>They copy numbers without any <strong>language variety</strong></li>
+        <li>They describe what the chart <em>is</em> rather than what it <em>shows</em></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📐</span> The Band 7 Task 1 Formula</h3>
+    <div class="formula"><span class="comment">¶ 1 — Introduction (2 sentences)</span>
+  → Paraphrase: "The chart/graph/diagram illustrates…"
+  → Do NOT copy the rubric word for word
+
+<span class="comment">¶ 2 — Overview (2–3 sentences) ← THIS IS THE KEY</span>
+  → State 2–3 MAJOR TRENDS without using specific numbers
+  → This is what separates Band 6 from Band 7
+
+<span class="comment">¶ 3 — Key Feature 1 (3–4 sentences)</span>
+  → Describe with specific data + comparison language
+
+<span class="comment">¶ 4 — Key Feature 2 (3–4 sentences)</span>
+  → Describe with specific data, contrast or elaborate</div>
+
+    <div class="rule-box">
+      <div class="rule-label">The Overview — What it actually is</div>
+      <p>The overview answers: <em>"What is the most important thing this chart shows?"</em> It is a bird's-eye view with no numbers.</p>
+    </div>
+    <div class="example-box">
+      <div class="bad-example"><div class="label">✗ Band 5 "Overview"</div>"There are many different types of energy shown in the chart."</div>
+      <div class="good-example"><div class="label">✓ Band 7 Overview</div>"Overall, it is clear that renewable energy sources experienced a significant increase over the period, while fossil fuel consumption declined steadily, with solar power recording the most dramatic growth."</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📊</span> Data Language — Full Bank</h3>
+    <table class="compare">
+      <tr><th>Category</th><th>Language</th></tr>
+      <tr><td>Rise (verb)</td><td>rose · increased · climbed · surged · grew · jumped · soared</td></tr>
+      <tr><td>Fall (verb)</td><td>fell · decreased · declined · dropped · plummeted · dipped · slumped</td></tr>
+      <tr><td>Stay same</td><td>remained stable · plateaued · levelled off · showed little change</td></tr>
+      <tr><td>Adverbs</td><td>sharply · dramatically · significantly · considerably · slightly · marginally · gradually · steadily</td></tr>
+      <tr><td>Noun phrases</td><td>a sharp rise in · a steady decline in · a marginal increase of · a peak of · a trough of</td></tr>
+      <tr><td>Comparison</td><td>In contrast to… · Compared with… · While X rose, Y fell… · X was significantly higher than Y…</td></tr>
+      <tr><td>Approximation</td><td>approximately · roughly · just over · just under · nearly · almost · around</td></tr>
+    </table>
+    <p style="margin-top:10px; font-size:0.82rem; color:var(--muted)">Use at least <strong>3 different verbs of change</strong> and <strong>2 different adverbs</strong> in each essay. Never repeat the same verb twice.</p>
+  </div>
+
+  <div class="task-card">
+    <h3>✏️ Practice Task — 20 minutes</h3>
+    <div class="prompt-box">The bar chart below shows the percentage of households with internet access in five countries between 2005 and 2020. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</div>
+    <ul>
+      <li>Time: <strong>20 minutes</strong> strictly</li>
+      <li>After writing: highlight every verb of change — aim for 3+ different verbs</li>
+      <li>Check: Do you have an Overview paragraph? Does it contain <em>no</em> specific numbers?</li>
+      <li>Count your words: aim for <strong>165–185 words</strong></li>
+    </ul>
+  </div>
+
+  <div class="retrieval-card">
+    <h3>⚡ Retrieval Task</h3>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q1.</strong> What are the four paragraphs of a Band 7 Task 1 response?</div>
+      <div class="tap-hint">Tap to reveal</div>
+      <div class="reveal">Introduction (paraphrase) → Overview (major trends, no numbers) → Key Feature 1 (with data) → Key Feature 2 (with data)</div>
+    </div>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q2.</strong> Name 5 verbs that mean "increase" and 5 that mean "decrease."</div>
+      <div class="tap-hint">Tap to reveal</div>
+      <div class="reveal">Rise: rose · increased · climbed · surged · soared · jumped | Fall: fell · decreased · declined · dropped · plummeted · dipped</div>
+    </div>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q3.</strong> What is the difference between the Overview and the introduction?</div>
+      <div class="tap-hint">Tap to reveal</div>
+      <div class="reveal">Introduction = paraphrase of what the chart shows (what type, what topic, what period). Overview = the most important trend(s) you can identify — no numbers, bird's-eye view.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== DAY 6 ===================== -->
+<div id="day6" class="section">
+  <div class="hero">
+    <div class="day-label">Day 6 · Saturday</div>
+    <h2>Integrated Practice + Error Log</h2>
+    <p>The Error Log is the most powerful tool a 5.5 student can use to break through the plateau. Repeated errors must be named, understood, and targeted — not just repeated.</p>
+    <div class="tags"><span class="tag accent">Integration</span><span class="tag">Error Log</span><span class="tag">Anki SR</span><span class="tag">Mini mock</span></div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📋</span> The Error Log Method</h3>
+    <p style="margin-bottom:12px; font-size:0.85rem; color:var(--muted)">Keep a notebook or spreadsheet with three columns. Review it at the end of every Saturday session.</p>
+    <table class="compare">
+      <tr><th>What I got wrong</th><th>Why I got it wrong</th><th>The rule I need to remember</th></tr>
+      <tr><td>TFNG: marked FALSE</td><td>Text didn't mention the topic</td><td>NOT GIVEN = no evidence either way</td></tr>
+      <tr><td>Listening: missed "accommodation"</td><td>Misspelled it</td><td>Double c, double m</td></tr>
+      <tr><td>Task 2: Band 5 vocab feedback</td><td>Used "important" 4 times</td><td>Use: crucial, pivotal, significant</td></tr>
+      <tr><td>Task 1: no band 7 for overview</td><td>Did not write overview paragraph</td><td>Overview = trends, no numbers, ¶2</td></tr>
+    </table>
+    <div class="rule-box" style="margin-top:14px">
+      <div class="rule-label">Spaced Repetition Rule</div>
+      <p>Any error that appears <strong>twice</strong> in your log gets converted to an Anki flashcard that night. Errors you repeat twice are your highest-priority learning targets.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🎴</span> Anki Flashcard System</h3>
+    <p style="margin-bottom:12px; font-size:0.85rem; color:var(--muted)">Anki uses the SM-2 spaced repetition algorithm — it shows you cards at exactly the interval your brain needs to consolidate them. Free at apps.ankiweb.net.</p>
+    <table class="compare">
+      <tr><th>Card type</th><th>Front</th><th>Back</th></tr>
+      <tr><td>Vocabulary</td><td>Definition + collocation sentence with blank</td><td>The word + all collocations</td></tr>
+      <tr><td>Grammar</td><td>The rule + a sentence with an error</td><td>Correct form + explanation</td></tr>
+      <tr><td>Spelling</td><td>Definition of the word</td><td>Correct spelling character by character</td></tr>
+    </table>
+    <p style="margin-top:10px; font-size:0.82rem; color:var(--muted)"><strong>Daily target:</strong> 20 cards. 10 minutes maximum. Do not skip days — one missed day doubles the review burden for the next session.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🗓️</span> Saturday Schedule</h3>
+    <table class="schedule-table">
+      <tr><th>Time</th><th>Activity</th></tr>
+      <tr><td>9:00–10:30</td><td>Mini mock: Reading Passage 3 + Listening Section 4 (strictly timed)</td></tr>
+      <tr><td>10:30–11:00</td><td>Mark and error-log every mistake. No excuses, no skipping.</td></tr>
+      <tr><td>11:00–12:00</td><td>Write one Task 2 essay on a topic you have NOT practised this week</td></tr>
+      <tr><td>12:00–12:30</td><td>Vocabulary review: add 10 words from this week to Anki</td></tr>
+      <tr><td>14:00–15:00</td><td>Speaking: record Part 1 (5 topics), Part 2, Part 3 (2 questions)</td></tr>
+      <tr><td>15:00–15:30</td><td>Self-assess using official IELTS Speaking Band Descriptors</td></tr>
+    </table>
+  </div>
+
+  <div class="task-card">
+    <h3>📊 Progress Measurement</h3>
+    <ul>
+      <li>Count new error types vs. repeated errors — repeated errors must decrease week on week</li>
+      <li>Count Band 7 vocabulary items in your Task 2 essay (target: 8+ per essay)</li>
+      <li>Compare Listening Section 4 score to Tuesday's attempt</li>
+    </ul>
+  </div>
+
+  <div class="retrieval-card">
+    <h3>⚡ Week Retrieval Review</h3>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q1.</strong> What are the three columns in an Error Log?</div>
+      <div class="tap-hint">Tap to reveal</div>
+      <div class="reveal">What I got wrong · Why I got it wrong · The rule I need to remember</div>
+    </div>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q2.</strong> Why does Anki work better than re-reading notes?</div>
+      <div class="tap-hint">Tap to reveal</div>
+      <div class="reveal">Anki uses the Testing Effect (Roediger & Karpicke, 2006): self-testing produces 50–80% better long-term retention than restudying. Spaced repetition ensures each card appears at the exact interval needed for consolidation.</div>
+    </div>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>Q3.</strong> Name one Band 7 structure from each of the five skills studied this week.</div>
+      <div class="tap-hint">Tap to reveal</div>
+      <div class="reveal">Writing T2: 4-paragraph argument structure · Listening: Prediction technique · Reading: TFNG 4-step method · Speaking: IDEA structure for Part 2 · Writing T1: Overview paragraph without numbers</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== DAY 7 ===================== -->
+<div id="day7" class="section">
+  <div class="hero">
+    <div class="day-label">Day 7 · Sunday</div>
+    <h2>Immersion + Rest Protocol</h2>
+    <p>Vocabulary acquisition and grammar internalisation occur during sleep and low-intensity exposure. Cramming on Sunday causes burnout. This day is deliberately light.</p>
+    <div class="tags"><span class="tag accent">Immersion</span><span class="tag">Passive input</span><span class="tag">Anki review only</span><span class="tag">Reflection</span></div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🧪</span> Why Rest is Evidence-Based</h3>
+    <p style="font-size:0.85rem; color:var(--muted); line-height:1.7">Dynamic Systems Theory (Larsen-Freeman, 1997) models language acquisition as non-linear — gains are consolidated during low-activity periods, not only during intensive study. Pushing 8 hours of study on Sunday does not add to Monday's performance; it depletes the cognitive resources that would otherwise consolidate Friday and Saturday's gains.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📅</span> Sunday Schedule</h3>
+    <table class="schedule-table">
+      <tr><th>Time</th><th>Activity</th></tr>
+      <tr><td>Morning</td><td>30 min: One TED Talk — subtitles OFF first watch, then ON to check missed words</td></tr>
+      <tr><td>Afternoon</td><td>30 min: Read one article from The Guardian, BBC, or The Economist — underline useful phrases</td></tr>
+      <tr><td>Evening</td><td>20 min: Review Anki flashcards only — do not add new cards today</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📚</span> The Input Method for New Vocabulary</h3>
+    <p style="margin-bottom:12px; font-size:0.85rem; color:var(--muted)">When you encounter a new word today (Nation's 4-Strand Model — Depth of Processing):</p>
+    <ol style="font-size:0.85rem; color:var(--muted); padding-left:20px">
+      <li style="margin-bottom:8px">Note the <strong>context</strong> — what was the article or talk about?</li>
+      <li style="margin-bottom:8px">Find <strong>2–3 collocations</strong> in a dictionary (not just the definition)</li>
+      <li style="margin-bottom:8px">Write one sentence using it in a context <em>you</em> care about</li>
+      <li style="margin-bottom:8px">Add to Anki tonight — collocations on the back, not just meaning</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🪞</span> Sunday Reflection Questions</h3>
+    <p style="font-size:0.85rem; color:var(--muted); margin-bottom:12px">Write 2–3 sentences for each. This is self-regulated learning (Zimmerman, 2002) — it is not optional:</p>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>1.</strong> What was the hardest thing this week?</div>
+      <div class="tap-hint">Tap to reflect</div>
+      <div class="reveal">Write honestly. "I kept confusing FALSE and NOT GIVEN" is a useful answer. "Everything was hard" is not.</div>
+    </div>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>2.</strong> Which question type or skill did I improve on most?</div>
+      <div class="tap-hint">Tap to reflect</div>
+      <div class="reveal">Compare your Saturday mini-mock to your Day 1 instincts. Look at the error log — did any category shrink?</div>
+    </div>
+    <div class="retrieval-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text"><strong>3.</strong> What ONE habit will I change next week?</div>
+      <div class="tap-hint">Tap to reflect</div>
+      <div class="reveal">One habit only. "I will write an Overview paragraph for every Task 1" is specific. "I will study harder" is not.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📈</span> End-of-Week Benchmark</h3>
+    <p style="font-size:0.85rem; color:var(--muted); line-height:1.7; margin-bottom:12px">Take one full Reading and one full Listening paper under timed conditions. Compare to your Day 1 baseline.</p>
+    <table class="compare">
+      <tr><th>Skill</th><th>Expected gain after 1 week</th><th>Timeline to Band 7</th></tr>
+      <tr><td>Listening</td><td>+0.5 band</td><td>4–6 weeks of this programme</td></tr>
+      <tr><td>Reading</td><td>+0.5 band</td><td>4–6 weeks</td></tr>
+      <tr><td>Writing</td><td>Structural improvement visible</td><td>8–12 weeks (scores lag technique)</td></tr>
+      <tr><td>Speaking</td><td>Extended answers in Parts 1–3</td><td>8–12 weeks (fluency takes time)</td></tr>
+    </table>
+    <p style="margin-top:12px; font-size:0.82rem; color:var(--muted)">The students who reach Band 7 are not those who study the most hours. They are those who study with <strong>retrieval, spacing, noticing, and pushed output</strong> — which is exactly what this week has delivered.</p>
+  </div>
+</div>
+
+<!-- ===================== VOCABULARY SR DECK ===================== -->
+<div id="vocab" class="section" id="vocab-section">
+  <div class="sr-hero">
+    <h2>Vocabulary Spaced Repetition Deck</h2>
+    <p>Based on Nation's 4-Strand Model and the SM-2 spaced repetition algorithm. Cards reviewed today will resurface at the optimal interval for long-term retention. Rate honestly — "Easy" on a word you are unsure of sets the wrong interval.</p>
+  </div>
+
+  <div class="sr-stats-grid">
+    <div class="stat-card stat-new"><div class="stat-num" id="stat-new">0</div><div class="stat-label">New today</div></div>
+    <div class="stat-card stat-review"><div class="stat-num" id="stat-review">0</div><div class="stat-label">Due for review</div></div>
+    <div class="stat-card stat-done"><div class="stat-num" id="stat-done">0</div><div class="stat-label">Done this session</div></div>
+    <div class="stat-card stat-total"><div class="stat-num" id="stat-total">0</div><div class="stat-label">Total cards</div></div>
+  </div>
+
+  <div class="sr-controls">
+    <select id="deck-filter" onchange="filterDeck()">
+      <option value="all">All categories</option>
+      <option value="writing-t2">Day 1 — Writing Task 2</option>
+      <option value="listening">Day 2 — Listening</option>
+      <option value="reading">Day 3 — Reading</option>
+      <option value="speaking">Day 4 — Speaking</option>
+      <option value="writing-t1">Day 5 — Writing Task 1</option>
+      <option value="academic">Academic Word List</option>
+    </select>
+    <button class="btn btn-primary" onclick="startSession()">Start Review Session</button>
+    <button class="btn btn-outline" onclick="resetProgress()" title="Reset all SR progress">Reset Progress</button>
+  </div>
+
+  <div id="fc-area" style="display:none">
+    <div class="fc-progress">Card <span id="fc-cur">1</span> of <span id="fc-total">0</span></div>
+    <div class="progress-wrap"><div class="progress-fill" id="fc-prog-bar" style="width:0%"></div></div>
+    <div class="fc-outer">
+      <div class="fc-inner" id="fc-inner" onclick="flipCard()">
+        <div class="fc-face fc-front">
+          <div class="fc-category" id="fc-cat"></div>
+          <div class="fc-word" id="fc-word"></div>
+          <div class="fc-hint" id="fc-hint"></div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-category" id="fc-cat-b"></div>
+          <div class="fc-definition" id="fc-def"></div>
+          <div class="fc-collocation" id="fc-coll"></div>
+          <div class="fc-example" id="fc-ex"></div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-flip-hint" id="flip-hint">Tap the card to reveal the answer</div>
+    <div class="fc-rating" id="fc-rating" style="display:none">
+      <button class="btn-again" onclick="rateCard(0)">Again<br><small>< 1 min</small></button>
+      <button class="btn-hard" onclick="rateCard(1)">Hard<br><small>1 day</small></button>
+      <button class="btn-good" onclick="rateCard(2)">Good<br><small>3 days</small></button>
+      <button class="btn-easy" onclick="rateCard(3)">Easy<br><small>1 week</small></button>
+    </div>
+  </div>
+
+  <div id="fc-done" style="display:none">
+    <div class="done-screen">
+      <div class="done-icon">🎉</div>
+      <h2>Session Complete!</h2>
+      <p id="done-msg">Great work. Your next review is scheduled based on how you rated each card.</p>
+      <br>
+      <button class="btn btn-primary" onclick="startSession()" style="margin-right:8px">Review Again</button>
+      <button class="btn btn-outline" onclick="showVocabBank()">Browse All Cards</button>
+    </div>
+  </div>
+
+  <div id="vocab-bank-area">
+    <div class="vocab-bank">
+      <h3>All Cards — <span id="bank-filter-label">All Categories</span></h3>
+      <div class="vocab-grid" id="vocab-grid"></div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ===================== NAVIGATION =====================
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const el = document.getElementById(id === 'vocab' ? 'vocab' : id);
+  if (el) el.classList.add('active');
+  const navItems = document.querySelectorAll('.nav-item');
+  const dayMap = { day1:0, day2:1, day3:2, day4:3, day5:4, day6:5, day7:6, vocab:7 };
+  if (navItems[dayMap[id]]) navItems[dayMap[id]].classList.add('active');
+  if (id === 'vocab') { renderVocabBank(); updateStats(); }
+}
+
+// ===================== VOCAB DATA =====================
+const VOCAB = [
+  // Day 1 — Writing Task 2
+  { id:'w2-01', word:'beneficial', cat:'writing-t2', catLabel:'Writing Task 2', def:'Producing good results; advantageous', coll:'beneficial effects · mutually beneficial · prove beneficial', ex:'Regular exercise has beneficial effects on both physical and mental health.', replaces:'good' },
+  { id:'w2-02', word:'detrimental', cat:'writing-t2', catLabel:'Writing Task 2', def:'Causing harm or damage', coll:'detrimental effects · prove detrimental · detrimental to health', ex:'Excessive screen time can be detrimental to children\'s development.', replaces:'bad' },
+  { id:'w2-03', word:'crucial', cat:'writing-t2', catLabel:'Writing Task 2', def:'Decisive; of the utmost importance', coll:'play a crucial role · crucial factor · it is crucial that', ex:'Education plays a crucial role in reducing poverty rates.', replaces:'important' },
+  { id:'w2-04', word:'pivotal', cat:'writing-t2', catLabel:'Writing Task 2', def:'Centrally important; of the utmost significance', coll:'pivotal role · pivotal moment · pivotal decision', ex:'The invention of the internet was a pivotal moment in human history.', replaces:'very important' },
+  { id:'w2-05', word:'indispensable', cat:'writing-t2', catLabel:'Writing Task 2', def:'Absolutely necessary; unable to be done without', coll:'indispensable tool · prove indispensable · indispensable to progress', ex:'Clean water is indispensable to human survival.', replaces:'essential/necessary' },
+  { id:'w2-06', word:'counterproductive', cat:'writing-t2', catLabel:'Writing Task 2', def:'Having the opposite effect to what is intended', coll:'prove counterproductive · counterproductive measures', ex:'Overly strict regulations may prove counterproductive by stifling innovation.', replaces:'bad/unhelpful' },
+  { id:'w2-07', word:'contention', cat:'writing-t2', catLabel:'Writing Task 2', def:'A formal assertion; a point of view maintained in an argument', coll:'it is my contention that · central contention · support the contention', ex:'It is my contention that governments have a primary responsibility to fund education.', replaces:'I think' },
+  { id:'w2-08', word:'pressing', cat:'writing-t2', catLabel:'Writing Task 2', def:'Requiring immediate attention; urgent', coll:'pressing issue · pressing concern · pressing need', ex:'Climate change remains one of the most pressing issues of our time.', replaces:'big problem' },
+  { id:'w2-09', word:'exacerbate', cat:'writing-t2', catLabel:'Writing Task 2', def:'To make a problem worse', coll:'exacerbate the problem · exacerbate inequality · exacerbate tensions', ex:'Lack of investment in infrastructure will only exacerbate the housing crisis.', replaces:'make worse' },
+  { id:'w2-10', word:'alleviate', cat:'writing-t2', catLabel:'Writing Task 2', def:'To make something less severe; to relieve', coll:'alleviate poverty · alleviate suffering · alleviate pressure', ex:'Greater investment in public transport would alleviate congestion in urban centres.', replaces:'reduce/help with' },
+  { id:'w2-11', word:'proliferation', cat:'writing-t2', catLabel:'Writing Task 2', def:'Rapid increase in the number of something', coll:'proliferation of technology · nuclear proliferation · rapid proliferation', ex:'The proliferation of social media platforms has transformed modern communication.', replaces:'increase/spread' },
+  { id:'w2-12', word:'undermine', cat:'writing-t2', catLabel:'Writing Task 2', def:'To weaken or damage something, especially gradually', coll:'undermine confidence · undermine authority · fundamentally undermine', ex:'Corruption fundamentally undermines trust in democratic institutions.', replaces:'weaken/damage' },
+
+  // Day 2 — Listening
+  { id:'li-01', word:'accommodation', cat:'listening', catLabel:'Listening Spelling', def:'A place to live or stay; lodging', coll:'student accommodation · find accommodation · temporary accommodation', ex:'The university provides accommodation for all first-year students.', replaces:'[Spelling trap]' },
+  { id:'li-02', word:'approximately', cat:'listening', catLabel:'Listening Spelling', def:'Used to show that something is almost, but not exactly, a particular number or time', coll:'approximately equal · approximately half · approximately two hours', ex:'The journey takes approximately two hours by train.', replaces:'[Spelling trap]' },
+  { id:'li-03', word:'adjacent', cat:'listening', catLabel:'Listening Spelling', def:'Next to or adjoining something else', coll:'adjacent to · adjacent rooms · adjacent buildings', ex:'The library is adjacent to the main lecture theatre.', replaces:'next to' },
+  { id:'li-04', word:'contemporary', cat:'listening', catLabel:'Listening', def:'Existing or occurring at the same time; belonging to the present', coll:'contemporary society · contemporary art · contemporary issues', ex:'In contemporary society, digital communication is unavoidable.', replaces:'nowadays/modern' },
+  { id:'li-05', word:'perception', cat:'listening', catLabel:'Listening', def:'The way in which something is regarded, understood, or interpreted', coll:'public perception · change perception · affect perception', ex:'Public perception of the issue has changed significantly in recent decades.', replaces:'view/opinion' },
+
+  // Day 3 — Reading
+  { id:'re-01', word:'substantiate', cat:'reading', catLabel:'Reading', def:'To provide evidence to support or prove the truth of something', coll:'substantiate a claim · fail to substantiate · substantiate with evidence', ex:'The researcher failed to substantiate her claims with reliable data.', replaces:'prove/support' },
+  { id:'re-02', word:'contradict', cat:'reading', catLabel:'Reading — TFNG', def:'To assert the opposite of a statement made by someone', coll:'directly contradict · contradict the evidence · contradict each other', ex:'This new evidence directly contradicts the previously accepted theory.', replaces:'go against' },
+  { id:'re-03', word:'infer', cat:'reading', catLabel:'Reading', def:'To deduce or conclude information from evidence and reasoning', coll:'infer from context · safe to infer · infer meaning', ex:'From the data presented, we can infer that demand is increasing.', replaces:'guess from context' },
+  { id:'re-04', word:'ambiguous', cat:'reading', catLabel:'Reading', def:'Open to more than one interpretation; unclear', coll:'ambiguous language · remain ambiguous · deliberately ambiguous', ex:'The instructions were ambiguous and open to different interpretations.', replaces:'unclear' },
+  { id:'re-05', word:'explicit', cat:'reading', catLabel:'Reading', def:'Stated clearly and in detail, leaving no room for doubt', coll:'explicitly stated · make explicit · explicit reference', ex:'The author makes an explicit reference to climate change in the introduction.', replaces:'clearly stated' },
+
+  // Day 4 — Speaking
+  { id:'sp-01', word:'therapeutic', cat:'speaking', catLabel:'Speaking', def:'Having a healing or beneficial effect on the body or mind', coll:'therapeutic benefits · find therapeutic · therapeutic value', ex:'I find cooking quite therapeutic — it helps me unwind after a long day.', replaces:'relaxing/good for you' },
+  { id:'sp-02', word:'perspective', cat:'speaking', catLabel:'Speaking', def:'A particular attitude towards or way of regarding something; a point of view', coll:'from a different perspective · gain perspective · broader perspective', ex:'From my perspective, technology has made life significantly more convenient.', replaces:'view/opinion' },
+  { id:'sp-03', word:'predominantly', cat:'speaking', catLabel:'Speaking', def:'Mainly; for the most part', coll:'predominantly urban · predominantly used · predominantly influenced', ex:'The city is predominantly inhabited by young professionals.', replaces:'mostly/mainly' },
+  { id:'sp-04', word:'inevitable', cat:'speaking', catLabel:'Speaking', def:'Certain to happen; unable to be avoided', coll:'virtually inevitable · it seems inevitable · accept as inevitable', ex:'Some degree of technological unemployment seems virtually inevitable.', replaces:'certain to happen' },
+  { id:'sp-05', word:'deteriorate', cat:'speaking', catLabel:'Speaking', def:'To become progressively worse', coll:'deteriorate rapidly · allow to deteriorate · quality deteriorates', ex:'The quality of public services has deteriorated significantly in recent years.', replaces:'get worse' },
+
+  // Day 5 — Writing Task 1
+  { id:'t1-01', word:'surged', cat:'writing-t1', catLabel:'Writing Task 1 — Rise', def:'Increased suddenly and dramatically', coll:'surged to · surge in demand · surge of interest', ex:'The number of internet users surged to over 4 billion during the decade.', replaces:'went up' },
+  { id:'t1-02', word:'plummeted', cat:'writing-t1', catLabel:'Writing Task 1 — Fall', def:'Fell sharply and rapidly', coll:'plummeted to · plummet in value · prices plummeted', ex:'Fossil fuel usage plummeted to its lowest point in 2019.', replaces:'went down a lot' },
+  { id:'t1-03', word:'plateaued', cat:'writing-t1', catLabel:'Writing Task 1 — Stable', def:'Reached a state of little or no change after a period of increase', coll:'plateaued at · growth plateaued · the figure plateaued', ex:'After rapid growth, the figure plateaued at approximately 60% in 2015.', replaces:'stayed the same' },
+  { id:'t1-04', word:'fluctuated', cat:'writing-t1', catLabel:'Writing Task 1', def:'Rose and fell irregularly; varied', coll:'fluctuated wildly · fluctuate between · slight fluctuation', ex:'The price of oil fluctuated considerably throughout the period.', replaces:'went up and down' },
+  { id:'t1-05', word:'marginal', cat:'writing-t1', catLabel:'Writing Task 1', def:'Very slight; not important enough to be worth considering', coll:'marginal increase · marginal difference · marginally higher', ex:'There was only a marginal increase in carbon emissions between 2010 and 2015.', replaces:'small/slight' },
+  { id:'t1-06', word:'substantial', cat:'writing-t1', catLabel:'Writing Task 1', def:'Of considerable importance, size, or worth', coll:'substantial increase · substantial difference · a substantial proportion', ex:'A substantial proportion of households had gained internet access by 2020.', replaces:'big/large' },
+
+  // Academic Word List
+  { id:'aw-01', word:'significant', cat:'academic', catLabel:'Academic Word List', def:'Sufficiently great or important to be worthy of attention', coll:'significant increase · statistically significant · significant impact', ex:'There has been a significant increase in public awareness of climate issues.', replaces:'big/important' },
+  { id:'aw-02', word:'facilitate', cat:'academic', catLabel:'Academic Word List', def:'To make an action or process easier', coll:'facilitate learning · facilitate communication · facilitate change', ex:'Technology can facilitate communication between people in different countries.', replaces:'help/make easier' },
+  { id:'aw-03', word:'subsequently', cat:'academic', catLabel:'Academic Word List', def:'After a particular thing has happened; afterwards', coll:'subsequently found · subsequently adopted · subsequently released', ex:'The policy was introduced in 2015 and subsequently expanded across the country.', replaces:'then/after that' },
+  { id:'aw-04', word:'advocate', cat:'academic', catLabel:'Academic Word List', def:'To publicly recommend or support a course of action or belief', coll:'advocate for · strong advocate · advocate change', ex:'Many experts advocate for greater investment in renewable energy.', replaces:'support/argue for' },
+  { id:'aw-05', word:'mitigate', cat:'academic', catLabel:'Academic Word List', def:'To make less severe, serious, or painful', coll:'mitigate risk · mitigate the effects · mitigate damage', ex:'Governments must take immediate steps to mitigate the effects of climate change.', replaces:'reduce/lessen' },
+  { id:'aw-06', word:'inherent', cat:'academic', catLabel:'Academic Word List', def:'Existing as a natural or permanent quality of something', coll:'inherent risk · inherent in the system · inherent advantage', ex:'There are inherent risks in any form of technological innovation.', replaces:'natural/built-in' },
+  { id:'aw-07', word:'disparity', cat:'academic', catLabel:'Academic Word List', def:'A great difference between things; inequality', coll:'income disparity · growing disparity · disparity between', ex:'The disparity between the richest and poorest nations continues to grow.', replaces:'difference/gap' },
+  { id:'aw-08', word:'compelling', cat:'academic', catLabel:'Academic Word List', def:'Evoking interest, attention, or admiration in a powerfully irresistible way', coll:'compelling evidence · compelling argument · make a compelling case', ex:'The researchers present compelling evidence that urban green spaces improve mental health.', replaces:'strong/convincing' },
+];
+
+// ===================== SR ENGINE (SM-2 simplified) =====================
+const SR_KEY = 'ielts_sr_v2';
+
+function loadSR() {
+  try { return JSON.parse(localStorage.getItem(SR_KEY)) || {}; } catch(e) { return {}; }
+}
+function saveSR(data) {
+  localStorage.setItem(SR_KEY, JSON.stringify(data));
+}
+
+function getCardData(id) {
+  const sr = loadSR();
+  return sr[id] || { interval: 0, easeFactor: 2.5, due: 0, reps: 0, status: 'new' };
+}
+
+function setCardData(id, d) {
+  const sr = loadSR();
+  sr[id] = d;
+  saveSR(sr);
+}
+
+function isDue(id) {
+  const d = getCardData(id);
+  return d.due <= Date.now();
+}
+
+function computeNext(d, quality) {
+  // quality: 0=again, 1=hard, 2=good, 3=easy
+  let { interval, easeFactor, reps } = d;
+  if (quality === 0) { interval = 0; reps = 0; }
+  else if (quality === 1) { interval = Math.max(1, interval); }
+  else if (quality === 2) {
+    if (reps === 0) interval = 1;
+    else if (reps === 1) interval = 3;
+    else interval = Math.round(interval * easeFactor);
+    reps++;
+  } else {
+    if (reps === 0) interval = 4;
+    else if (reps === 1) interval = 7;
+    else interval = Math.round(interval * easeFactor * 1.3);
+    reps++;
+    easeFactor = Math.min(2.5, easeFactor + 0.15);
+  }
+  easeFactor = Math.max(1.3, easeFactor - (quality < 2 ? 0.2 : 0));
+  const due = quality === 0 ? Date.now() + 60000 : Date.now() + interval * 86400000;
+  const status = reps >= 3 ? 'mastered' : reps >= 1 ? 'learning' : 'new';
+  return { interval, easeFactor, reps, due, status };
+}
+
+// ===================== SESSION STATE =====================
+let sessionCards = [];
+let sessionIdx = 0;
+let sessionDone = 0;
+let cardFlipped = false;
+let activeFilter = 'all';
+
+function filterDeck() {
+  activeFilter = document.getElementById('deck-filter').value;
+  renderVocabBank();
+  updateStats();
+}
+
+function getDueCards() {
+  return VOCAB.filter(v => (activeFilter === 'all' || v.cat === activeFilter) && isDue(v.id));
+}
+
+function updateStats() {
+  const all = activeFilter === 'all' ? VOCAB : VOCAB.filter(v => v.cat === activeFilter);
+  const sr = loadSR();
+  let nNew = 0, nReview = 0;
+  all.forEach(v => {
+    const d = sr[v.id];
+    if (!d || d.reps === 0) nNew++;
+    else if (d.due <= Date.now()) nReview++;
+  });
+  document.getElementById('stat-new').textContent = nNew;
+  document.getElementById('stat-review').textContent = nReview;
+  document.getElementById('stat-done').textContent = sessionDone;
+  document.getElementById('stat-total').textContent = all.length;
+  document.getElementById('sb-due').textContent = getDueCards().length;
+}
+
+function startSession() {
+  sessionCards = getDueCards();
+  if (sessionCards.length === 0) {
+    document.getElementById('fc-area').style.display = 'none';
+    document.getElementById('fc-done').style.display = 'block';
+    document.getElementById('done-msg').textContent = 'All cards reviewed! No cards due right now. Come back later for your next spaced repetition session.';
+    document.getElementById('vocab-bank-area').style.display = 'none';
+    return;
+  }
+  // shuffle
+  sessionCards.sort(() => Math.random() - 0.5);
+  sessionIdx = 0;
+  sessionDone = 0;
+  document.getElementById('fc-area').style.display = 'block';
+  document.getElementById('fc-done').style.display = 'none';
+  document.getElementById('vocab-bank-area').style.display = 'none';
+  showCard();
+  updateStats();
+}
+
+function showCard() {
+  const card = sessionCards[sessionIdx];
+  if (!card) { endSession(); return; }
+  cardFlipped = false;
+  document.getElementById('fc-inner').classList.remove('flipped');
+  document.getElementById('fc-rating').style.display = 'none';
+  document.getElementById('flip-hint').style.display = 'block';
+  document.getElementById('fc-cat').textContent = card.catLabel;
+  document.getElementById('fc-word').textContent = card.word;
+  document.getElementById('fc-hint').textContent = card.replaces ? `Replaces: "${card.replaces}"` : '';
+  document.getElementById('fc-cat-b').textContent = card.catLabel;
+  document.getElementById('fc-def').textContent = card.def;
+  document.getElementById('fc-coll').textContent = '🔗 ' + card.coll;
+  document.getElementById('fc-ex').textContent = '📝 ' + card.ex;
+  const cur = sessionIdx + 1;
+  const tot = sessionCards.length;
+  document.getElementById('fc-cur').textContent = cur;
+  document.getElementById('fc-total').textContent = tot;
+  document.getElementById('fc-prog-bar').style.width = ((cur - 1) / tot * 100) + '%';
+}
+
+function flipCard() {
+  if (cardFlipped) return;
+  cardFlipped = true;
+  document.getElementById('fc-inner').classList.add('flipped');
+  document.getElementById('fc-rating').style.display = 'flex';
+  document.getElementById('flip-hint').style.display = 'none';
+}
+
+function rateCard(quality) {
+  const card = sessionCards[sessionIdx];
+  const d = getCardData(card.id);
+  const next = computeNext(d, quality);
+  setCardData(card.id, next);
+  if (quality === 0) {
+    // push to end
+    sessionCards.push(card);
+  }
+  sessionDone++;
+  sessionIdx++;
+  updateStats();
+  showCard();
+}
+
+function endSession() {
+  document.getElementById('fc-area').style.display = 'none';
+  document.getElementById('fc-done').style.display = 'block';
+  document.getElementById('vocab-bank-area').style.display = 'none';
+  document.getElementById('done-msg').textContent = `You reviewed ${sessionDone} cards this session. Your next reviews are scheduled based on your ratings. Return tomorrow to continue.`;
+  updateStats();
+}
+
+function showVocabBank() {
+  document.getElementById('fc-done').style.display = 'none';
+  document.getElementById('vocab-bank-area').style.display = 'block';
+  renderVocabBank();
+}
+
+function renderVocabBank() {
+  const sr = loadSR();
+  const filter = document.getElementById('deck-filter').value;
+  const cards = filter === 'all' ? VOCAB : VOCAB.filter(v => v.cat === filter);
+  document.getElementById('bank-filter-label').textContent = filter === 'all' ? 'All Categories' : cards[0]?.catLabel || filter;
+  const grid = document.getElementById('vocab-grid');
+  grid.innerHTML = cards.map(v => {
+    const d = sr[v.id];
+    const cls = !d || d.reps === 0 ? 'sr-new' : d.status === 'mastered' ? 'sr-mastered' : 'sr-learning';
+    return `<div class="vocab-card-mini ${cls}">
+      <div class="word">${v.word}</div>
+      <div class="def">${v.def}</div>
+      <div class="level">${cls === 'sr-new' ? '🆕 New' : cls === 'sr-mastered' ? '✅ Mastered' : '🔄 Learning'}</div>
+    </div>`;
+  }).join('');
+}
+
+function resetProgress() {
+  if (confirm('Reset all spaced repetition progress? This cannot be undone.')) {
+    localStorage.removeItem(SR_KEY);
+    sessionDone = 0;
+    updateStats();
+    renderVocabBank();
+  }
+}
+
+// ===================== INIT =====================
+document.addEventListener('DOMContentLoaded', () => {
+  updateStats();
+  renderVocabBank();
+});
+</script>
+</body>
+</html>
